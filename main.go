@@ -1,23 +1,33 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
-type intArray = [3]int
-
-func main() {
-	a := intArray{1, 2, 3}
-	//pointerA := &a // Адрес в памяти
-	//multiple(&a)
-	//fmt.Println(*pointerA) // Получение занчение из адреса
-	fmt.Println(a)
-	reversed(&a)
-	fmt.Println(a)
+type account struct {
+	login    string
+	password string
+	url      string
 }
 
-func reversed(arr *intArray) {
-	for index, value := range *arr {
-		arr[len(arr)-1-index] = value
+func main() {
+	login := promtData("Введите логин:")
+	password := promtData("Введите пароль:")
+	url := promtData("Введите URL")
+
+	myAccount := account{
+		login:    login,
+		password: password,
+		url:      url,
 	}
+	outputPassword(&myAccount)
+}
+
+func promtData(promt string) string {
+	fmt.Println(promt)
+	var res string
+	fmt.Scan(&res)
+	return res
+}
+
+func outputPassword(acc *account) {
+	fmt.Println(acc.login, acc.password, acc.url)
 }
