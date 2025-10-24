@@ -11,21 +11,27 @@ type account struct {
 	url      string
 }
 
-func (acc account) outputPassword() {
-	fmt.Println(acc.password)
+func (acc *account) outputPassword() {
+	fmt.Println(acc.login, acc.password, acc.url)
+}
+
+func (acc *account) generatePassword(n int) {
+	res := make([]rune, n)
+	for i := range res {
+		res[i] = letterRunes[rand.Intn(len(letterRunes))]
+	}
+	acc.password = string(res)
 }
 
 func main() {
-	fmt.Println(generatePassword(12))
 	login := promtData("Введите логин:")
-	password := promtData("Введите пароль:")
 	url := promtData("Введите URL:")
 
 	myAccount := account{
-		login,
-		password,
-		url,
+		login: login,
+		url:   url,
 	}
+	myAccount.generatePassword(12)
 	myAccount.outputPassword()
 }
 
@@ -36,16 +42,4 @@ func promtData(promt string) string {
 	var res string
 	fmt.Scan(&res)
 	return res
-}
-
-func outputPassword(acc *account) {
-	fmt.Println(acc.login, acc.password, acc.url)
-}
-
-func generatePassword(n int) string {
-	res := make([]rune, n)
-	for i := range res {
-		res[i] = letterRunes[rand.Intn(len(letterRunes))]
-	}
-	return string(res)
 }
